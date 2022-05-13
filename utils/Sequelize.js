@@ -1,5 +1,6 @@
 'use strict';
 
+
 const Path = require('path');
 const {Sequelize, DataTypes} = require('sequelize');
 
@@ -15,7 +16,7 @@ const sequelize = new Sequelize({
 
 const DB = {
 
-	User: sequelize.define('user', {
+	user: sequelize.define('user', {
 		id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
@@ -30,7 +31,7 @@ const DB = {
 		}
 	}),
 
-	DiscordUserAuth: sequelize.define('discord_user_auth', {
+	discord_user_auth: sequelize.define('discord_user_auth', {
 		discord_user_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

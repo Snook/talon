@@ -1,11 +1,12 @@
 'use strict';
 
+
 const config = require('./config/config');
 
 const Hapi = require('@hapi/hapi');
 const Path = require('path');
 
-const {AxiosDiscord, AxiosHelix} = require('./utils/Axios');
+const Api = require('./utils/Api');
 const DB = require('./utils/Sequelize');
 
 const start = async () => {
@@ -84,7 +85,7 @@ const start = async () => {
 			path: '/',
 			handler: async (request, h) => {
 
-				let team = await AxiosHelix({
+				let team = await Api.helix({
 					endpoint: `/teams`,
 					params: {
 						name: server.settings.app.options.team_name
@@ -99,11 +100,11 @@ const start = async () => {
 					streamList += `&user_id=${user.user_id}`;
 				}
 
-				let users = await AxiosHelix({
+				let users = await Api.helix({
 					endpoint: `/users?${userList}`
 				});
 
-				let streams = await AxiosHelix({
+				let streams = await Api.helix({
 					endpoint: `/streams?${streamList}`
 				});
 
@@ -136,9 +137,9 @@ const start = async () => {
 						//return `Authentication failed due to: ${request.auth.error.message}`;
 					}
 
-					let user = await DB.User.upsert({discord_user_id: request.auth.credentials.profile.id});
+					let user = await DB.user.upsert({discord_user_id: request.auth.credentials.profile.id});
 
-					let discord_user_auth = await DB.DiscordUserAuth.upsert({
+					let discord_user_auth = await DB.discord_user_auth.upsert({
 						discord_user_id: request.auth.credentials.profile.id,
 						access_token: request.auth.artifacts.access_token,
 						expires_in: request.auth.artifacts.expires_in,
