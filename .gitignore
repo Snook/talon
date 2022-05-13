@@ -107,4 +107,6 @@ dist
 **/config.json
 
 # Ignore database
-*database/*
+database/*
+!database/.gitkeep
+
