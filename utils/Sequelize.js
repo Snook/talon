@@ -16,6 +16,31 @@ const sequelize = new Sequelize({
 
 const DB = {
 
+	app_twitch_auth: sequelize.define('app_twitch_auth', {
+		client_id: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			unique: true,
+			primaryKey: true,
+		},
+		access_token: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		expires_in: {
+			type: DataTypes.INTEGER,
+			allowNull: false
+		},
+		token_type: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		expires: {
+			type: DataTypes.INTEGER,
+			allowNull: false
+		}
+	}),
+
 	user: sequelize.define('user', {
 		id: {
 			type: DataTypes.INTEGER,
