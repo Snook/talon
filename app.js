@@ -3,67 +3,10 @@
 const config = require('./config/config');
 
 const Hapi = require('@hapi/hapi');
-const Axios = require('axios');
 const Path = require('path');
 
-// database
-const {Sequelize, DataTypes} = require('sequelize');
-const sequelize = new Sequelize({
-	dialect: 'sqlite',
-	storage: Path.join(__dirname, 'database/main.sqlite'),
-	define: {
-		freezeTableName: true,
-		paranoid: true
-	},
-	logging: false
-});
-
-const User = sequelize.define('user', {
-	id: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-		unique: true,
-		primaryKey: true,
-		autoIncrement: true
-	},
-	discord_user_id: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-		unique: true
-	}
-});
-
-const DiscordUserAuth = sequelize.define('discord_user_auth', {
-	discord_user_id: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-		unique: true,
-		primaryKey: true,
-		autoIncrement: false
-	},
-	access_token: {
-		type: DataTypes.STRING,
-		allowNull: false
-	},
-	expires_in: {
-		type: DataTypes.INTEGER,
-		allowNull: false
-	},
-	refresh_token: {
-		type: DataTypes.STRING,
-		allowNull: false
-	},
-	scope: {
-		type: DataTypes.STRING,
-		allowNull: false
-	},
-	token_type: {
-		type: DataTypes.STRING,
-		allowNull: false
-	}
-});
-
-sequelize.sync({alter: true});
+const {AxiosDiscord, AxiosHelix} = require('./utils/Axios');
+const DB = require('./utils/Sequelize');
 
 const start = async () => {
 
@@ -141,14 +84,10 @@ const start = async () => {
 			path: '/',
 			handler: async (request, h) => {
 
-				let team = await Axios({
-					url: `https://api.twitch.tv/helix/teams`,
+				let team = await AxiosHelix({
+					endpoint: `/teams`,
 					params: {
 						name: server.settings.app.options.team_name
-					},
-					headers: {
-						Authorization: `Bearer ${server.settings.app.twitch.oauth2_token.access_token}`,
-						"Client-ID": `${server.settings.app.twitch.client_id}`,
 					}
 				});
 
@@ -160,20 +99,12 @@ const start = async () => {
 					streamList += `&user_id=${user.user_id}`;
 				}
 
-				let users = await Axios({
-					url: `https://api.twitch.tv/helix/users?${userList}`,
-					headers: {
-						Authorization: `Bearer ${server.settings.app.twitch.oauth2_token.access_token}`,
-						"Client-ID": `${server.settings.app.twitch.client_id}`,
-					}
+				let users = await AxiosHelix({
+					endpoint: `/users?${userList}`
 				});
 
-				let streams = await Axios({
-					url: `https://api.twitch.tv/helix/streams?${streamList}`,
-					headers: {
-						Authorization: `Bearer ${server.settings.app.twitch.oauth2_token.access_token}`,
-						"Client-ID": `${server.settings.app.twitch.client_id}`,
-					}
+				let streams = await AxiosHelix({
+					endpoint: `/streams?${streamList}`
 				});
 
 				let onlineStreamsById = [];
@@ -205,9 +136,9 @@ const start = async () => {
 						//return `Authentication failed due to: ${request.auth.error.message}`;
 					}
 
-					let user = await User.upsert({discord_user_id: request.auth.credentials.profile.id});
+					let user = await DB.User.upsert({discord_user_id: request.auth.credentials.profile.id});
 
-					let discord_user_auth = await DiscordUserAuth.upsert({
+					let discord_user_auth = await DB.DiscordUserAuth.upsert({
 						discord_user_id: request.auth.credentials.profile.id,
 						access_token: request.auth.artifacts.access_token,
 						expires_in: request.auth.artifacts.expires_in,
