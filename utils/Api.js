@@ -22,6 +22,10 @@ const Api = {
 					'content-type': `application/x-www-form-urlencoded`
 				}
 
+			}).catch(function (err) {
+
+				console.log(err);
+
 			});
 
 			if (app_twitch_auth.data.expires_in) {
