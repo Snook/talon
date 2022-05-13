@@ -1,0 +1,24 @@
+{
+  "hostname": "127.0.0.1",
+  "port": "30080",
+  "isSecure": false,
+  "cookie_secret": "",
+  "twitch": {
+    "client_id": "",
+    "app_secret": "",
+    "callback_challenge": "",
+    "oauth2_token": {
+      "access_token": "",
+      "expires_in": "",
+      "token_type": "",
+      "expires": ""
+    }
+  },
+  "discord": {
+    "redirect_url": "",
+    "client_id": "",
+    "app_secret": "",
+    "oauth2_url": "",
+    "bot_token": ""
+  }
+}

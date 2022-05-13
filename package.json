@@ -1,0 +1,45 @@
+{
+  "name": "talon_hapi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css": "npm-run-all css-compile css-minify",
+    "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css assets/scss:public/css/",
+    "css-minify": "npm-run-all --aggregate-output --parallel css-minify-*",
+    "css-minify-main": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output public/css/ --batch --batch-suffix \".min\" \"public/css/*.css\" \"!public/css/*.min.css\" \"!public/css/*rtl*.css\"",
+    "js": "npm-run-all js-minify",
+    "js-minify": "npm-run-all --aggregate-output --parallel js-minify-*",
+    "js-minify-standalone": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=node_modules/bootstrap/js/dist/js/bootstrap.js.map,includeSources,url=bootstrap.min.js.map\" --output public/js/bootstrap.min.js public/js/bootstrap.js",
+    "js-minify-standalone-esm": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=node_modules/bootstrap/js/dist/js/bootstrap.esm.js.map,includeSources,url=bootstrap.esm.min.js.map\" --output public/js/bootstrap.esm.min.js public/js/bootstrap.esm.js",
+    "js-minify-bundle": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=node_modules/bootstrap/js/dist/js/bootstrap.bundle.js.map,includeSources,url=bootstrap.bundle.min.js.map\" --output public/js/bootstrap.bundle.min.js public/js/bootstrap.bundle.js",
+    "watch": "npm-run-all --parallel watch-*",
+    "watch-css-main": "nodemon --watch assets/scss --ext scss --exec \"npm-run-all css\""
+  },
+  "keywords": [],
+  "author": "Ryan <ghryphen@gmail.com>",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@hapi/bell": "^12.3.0",
+    "@hapi/cookie": "^11.0.2",
+    "@hapi/hapi": "^20.2.2",
+    "@hapi/inert": "^6.0.5",
+    "@hapi/vision": "^6.1.0",
+    "bootstrap": "^5.1.3",
+    "handlebars": "^4.7.7",
+    "sequelize": "^6.19.0",
+    "sqlite3": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/hapi": "^18.0.7",
+    "@types/hapi__vision": "^5.5.3",
+    "axios": "^0.27.2",
+    "clean-css-cli": "^5.6.0",
+    "nodemon": "^2.0.16",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.51.0",
+    "terser": "^5.13.1"
+  }
+}

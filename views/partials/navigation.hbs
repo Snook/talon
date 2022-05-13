@@ -1,0 +1,30 @@
+<div class="p-3 row">
+	<div class="col-12 col-md-2 col-lg-1 text-center text-md-start">
+		<a href="/"><img src="/img/talon-avatar.png" class="img-fluid rounded-circle"></a>
+	</div>
+	<div class="col-12 col-md-6 col-lg-7 text-center text-md-start align-self-center">
+		<h1><span class="text-talon fw-bold">Talon</span> <span class="fs-5"><span class="text-blurple">Discord</span> Bot</span></h1>
+		<p class="ps-1">Discord bot built for <a href="https://www.twitch.tv/team/daddysmisfits" target="_blank">Daddy's Misfits</a> Twitch stream team!</p>
+	</div>
+	<div class="col-12 col-md-4 text-center text-md-end align-self-center mt-3">
+		{{#if credentials}}
+			<div class="dropdown">
+				<button class="btn btn-talon btn-lg dropdown-toggle fw-bold" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+					<img src="https://cdn.discordapp.com/avatars/{{credentials.discord_id}}/{{credentials.avatar_id}}.png" width="32" class="rounded-circle "/> {{credentials.username}}<span
+						class="text-blurple">#{{credentials.discriminator}}</span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropdownMenu2">
+					<li><a class="dropdown-item text-talon" href="/subscriptions">Subs</a></li>
+					<li><a class="dropdown-item text-talon" href="/server/276625926148849665">Curpies Nation</a></li>
+					<li><a class="dropdown-item text-talon" href="/server/766801126930382868">Ghryphen's Pride</a></li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+					<li><a class="dropdown-item text-talon" href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		{{else}}
+			<a href="/oauth/discord" class="btn btn-blurple">Login with Discord</a>
+		{{/if}}
+	</div>
+</div>

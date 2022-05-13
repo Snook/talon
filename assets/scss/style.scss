@@ -1,0 +1,121 @@
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+// Color system
+
+// scss-docs-start gray-color-variables
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+// scss-docs-end gray-color-variables
+
+// fusv-disable
+// scss-docs-start gray-colors-map
+$grays: (
+		"100": $gray-100,
+		"200": $gray-200,
+		"300": $gray-300,
+		"400": $gray-400,
+		"500": $gray-500,
+		"600": $gray-600,
+		"700": $gray-700,
+		"800": $gray-800,
+		"900": $gray-900
+);
+// scss-docs-end gray-colors-map
+// fusv-enable
+
+// scss-docs-start color-variables
+$blue: #0d6efd;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #d63384;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #198754;
+$teal: #20c997;
+$cyan: #0dcaf0;
+// scss-docs-end color-variables
+
+
+$talon: #D58B02;
+$blurple: #5865F2;
+$twurple: #9146FF;
+$twice: #F0F0FF;
+
+
+// scss-docs-start colors-map
+$colors: (
+		"blue": $blue,
+		"blurple": $blurple,
+		"twurple": $twurple,
+		"twice": $twice,
+		"indigo": $indigo,
+		"purple": $purple,
+		"pink": $pink,
+		"red": $red,
+		"talon": $talon,
+		"orange": $orange,
+		"yellow": $yellow,
+		"green": $green,
+		"teal": $teal,
+		"cyan": $cyan,
+		"white": $white,
+		"gray": $gray-600,
+		"gray-dark": $gray-800
+);
+// scss-docs-end colors-map
+
+// scss-docs-start theme-color-variables
+$primary: $blue;
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-900;
+// scss-docs-end theme-color-variables
+
+// scss-docs-start theme-colors-map
+$theme-colors: (
+		"primary": $primary,
+		"secondary": $secondary,
+		"blurple": $blurple,
+		"twurple": $twurple,
+		"twice": $twice,
+		"success": $success,
+		"info": $info,
+		"talon": $talon,
+		"warning": $warning,
+		"danger": $danger,
+		"light": $light,
+		"dark": $dark
+);
+// scss-docs-end theme-colors-map
+
+$font-family-base: "Open Sans", sans-serif;
+$font-family-sans-serif: "Open Sans", sans-serif;
+
+$body-bg: #3c230a;
+$body-color: $white;
+
+$link-color: $talon;
+
+$enable-rounded: true;
+
+$dropdown-min-width: 14rem;
+
+
+@import "../../node_modules/bootstrap/scss/bootstrap";

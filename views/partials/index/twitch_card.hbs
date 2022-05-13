@@ -1,0 +1,19 @@
+<div class="col">
+	<div class="card bg-talon text-black">
+		<div class="row g-0">
+			<div class="col-xl-4 ">
+				<img src="{{this.profile_image_url}}" class="border border-{{#if this.stream}}5{{else}}2{{/if}} border-{{#if this.stream}}twurple{{else}}secondary{{/if}} img-fluid m-xl-2 rounded-circle w-100"
+					 alt="{{this.display_name}}">
+			</div>
+			<div class="col-xl-8">
+				<div class="card-body">
+					<h5 class="card-title fw-bold">{{this.display_name}}</h5>
+					<p class="card-text fs-6 overflow-auto" style="height: 150px;">{{this.description}}</p>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer">
+			<a href="https://www.twitch.tv/{{this.login}}" class="btn btn-{{#if this.stream}}twurple{{else}}dark text-talon{{/if}} w-100" target="_blank">{{#if this.stream}}Watch{{else}}About{{/if}} {{this.display_name}}</a>
+		</div>
+	</div>
+</div>
