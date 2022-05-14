@@ -2,7 +2,7 @@
 
 
 const Path = require('path');
-const {Sequelize, DataTypes} = require('sequelize');
+const {Sequelize, DataTypes, Op} = require('sequelize');
 
 const sequelize = new Sequelize({
 	dialect: 'sqlite',
@@ -105,4 +105,4 @@ const DB = {
 
 sequelize.sync({alter: true});
 
-module.exports = DB;
+module.exports = {DB, Op};

@@ -4,7 +4,7 @@
 const config = require('../config/config');
 const Axios = require('axios');
 const Hash = require('object-hash');
-const DB = require('./Sequelize');
+const {DB, Op} = require('./Sequelize');
 
 const Api = {
 
@@ -71,11 +71,19 @@ const Api = {
 			let hash = Hash(axiosParams);
 
 			// check cache for recent data
-			let cacheFetch = await DB.app_cache_helix.findOne({where: {hash: hash}});
+			let cacheFetch = await DB.app_cache_helix.findOne({
+				where: {
+					hash: hash,
+					updatedAt: {
+						[Op.gt]: new Date(Date.now() - (config.cache_timeout_minutes * 60 * 1000))
+					}
+				}
+			});
 
 			let response;
 
 			if (cacheFetch === null || axiosParams.defeatCache) {
+
 				// no recent cache so query the remote API
 				response = await Axios(axiosParams).catch(function (err) {
 
@@ -84,10 +92,13 @@ const Api = {
 				});
 
 				await DB.app_cache_helix.upsert({hash: hash, response: response.data});
+
 			} else {
+
 				response = {
 					data: cacheFetch.dataValues.response
 				}
+
 			}
 
 			return response;
