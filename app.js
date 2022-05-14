@@ -4,8 +4,10 @@
 const config = require('./config/config');
 
 const Hapi = require('@hapi/hapi');
+const Async = require('async');
 const Path = require('path');
 
+const Auth = require('./utils/Auth');
 const Api = require('./utils/Api');
 const {DB} = require('./utils/Sequelize');
 
@@ -45,14 +47,19 @@ const start = async () => {
 			isSecure: config.isSecure
 		},
 		keepAlive: true,
-		validateFunc: async (request, session) => {
+		validateFunc: (request, session) => {
 
 			if (!session) {
-				// Must return { valid: false } for invalid cookies
-				return {valid: false};
+				return {
+					valid: false
+				};
 			}
 
-			return {valid: true, credentials: session};
+			return {
+				valid: true,
+				credentials: session
+			};
+
 		}
 	});
 
@@ -153,12 +160,7 @@ const start = async () => {
 					});
 
 					request.cookieAuth.set({
-						user_id: user.id,
-						discord_id: request.auth.credentials.profile.id,
-						avatar_id: request.auth.credentials.profile.avatar.id,
-						email: request.auth.credentials.profile.email,
-						username: request.auth.credentials.profile.username,
-						discriminator: request.auth.credentials.profile.discriminator
+						user_id: user[0].dataValues.id
 					});
 
 					return h.redirect('/');
