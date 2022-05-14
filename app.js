@@ -4,10 +4,8 @@
 const config = require('./config/config');
 
 const Hapi = require('@hapi/hapi');
-const Async = require('async');
 const Path = require('path');
 
-const Auth = require('./utils/Auth');
 const Api = require('./utils/Api');
 const {DB} = require('./utils/Sequelize');
 
