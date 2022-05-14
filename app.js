@@ -7,7 +7,7 @@ const Hapi = require('@hapi/hapi');
 const Path = require('path');
 
 const Api = require('./utils/Api');
-const DB = require('./utils/Sequelize');
+const {DB} = require('./utils/Sequelize');
 
 const start = async () => {
 
@@ -138,7 +138,10 @@ const start = async () => {
 						//return `Authentication failed due to: ${request.auth.error.message}`;
 					}
 
-					let user = await DB.user.upsert({discord_user_id: request.auth.credentials.profile.id});
+					let user = await DB.user.upsert({
+						id: request.auth.credentials.profile.id,
+						discord_user_id: request.auth.credentials.profile.id
+					});
 
 					let discord_user_auth = await DB.discord_user_auth.upsert({
 						discord_user_id: request.auth.credentials.profile.id,

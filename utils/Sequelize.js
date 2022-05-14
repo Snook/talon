@@ -59,14 +59,13 @@ const DB = {
 		id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			unique: true,
-			primaryKey: true,
-			autoIncrement: true
+			primaryKey: true
 		},
 		discord_user_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			unique: true
+			unique: true,
+			primaryKey: true
 		}
 	}),
 
