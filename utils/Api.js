@@ -3,6 +3,7 @@
 
 const config = require('../config/config');
 const Axios = require('axios');
+const Hash = require('object-hash');
 const DB = require('./Sequelize');
 
 const Api = {
@@ -47,30 +48,53 @@ const Api = {
 		return app_twitch_auth;
 	},
 
+	// fetch wrapper for Twitch api
 	helix: async function (params) {
 
 		let app_twitch_auth = await this.app_twitch_auth();
 
 		if (config.twitch.client_id) {
 
+			// setup Axios parameters
 			let axiosParams = {
-				...params,
+				defeatCache: false,
 				headers: {
 					Authorization: `Bearer ${app_twitch_auth.access_token}`,
 					"Client-ID": `${config.twitch.client_id}`,
-				}
+				},
+				...params
 			};
 
 			axiosParams.url = `https://api.twitch.tv/helix${axiosParams.endpoint}`;
 
-			return Axios(axiosParams).catch(function (err) {
+			// get unique hash for Axios parameters to use as cache identification
+			let hash = Hash(axiosParams);
 
-				console.log(err);
+			// check cache for recent data
+			let cacheFetch = await DB.app_cache_helix.findOne({where: {hash: hash}});
 
-			});
+			let response;
+
+			if (cacheFetch === null || axiosParams.defeatCache) {
+				// no recent cache so query the remote API
+				response = await Axios(axiosParams).catch(function (err) {
+
+					console.log(err);
+
+				});
+
+				await DB.app_cache_helix.upsert({hash: hash, response: response.data});
+			} else {
+				response = {
+					data: cacheFetch.dataValues.response
+				}
+			}
+
+			return response;
 		}
 	},
 
+	// fetch wrapper for Discord api
 	discord: async function (discordParams) {
 
 		let axiosParams = {

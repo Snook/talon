@@ -87,6 +87,7 @@ const start = async () => {
 
 				let team = await Api.helix({
 					endpoint: `/teams`,
+					defeatCache: true,
 					params: {
 						name: server.settings.app.options.team_name
 					}

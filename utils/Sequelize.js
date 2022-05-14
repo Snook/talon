@@ -41,6 +41,20 @@ const DB = {
 		}
 	}),
 
+	app_cache_helix: sequelize.define('app_cache_helix', {
+		hash: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			unique: true,
+			primaryKey: true,
+			autoIncrement: false
+		},
+		response: {
+			type: DataTypes.JSON,
+			allowNull: false
+		}
+	}),
+
 	user: sequelize.define('user', {
 		id: {
 			type: DataTypes.INTEGER,
