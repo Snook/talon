@@ -39,7 +39,7 @@ const Api = {
 					expires: (Date.now() + (app_twitch_auth.data.expires_in * 1000))
 				};
 
-				DB.app_twitch_auth.upsert(app_twitch_auth);
+				await DB.app_twitch_auth.upsert(app_twitch_auth);
 			}
 		} else {
 			app_twitch_auth = app_twitch_auth.dataValues;
@@ -108,14 +108,15 @@ const Api = {
 	// fetch wrapper for Discord api
 	discord: async function (discordParams) {
 
+		// setup Axios parameters
 		let axiosParams = {
-			...discordParams,
 			params: {
 				wait: true
 			},
 			headers: {
 				Authorization: `Bot ${config.discord.bot_token}`
-			}
+			},
+			...discordParams
 		};
 
 		axiosParams.url = `https://discordapp.com/api${axiosParams.endpoint}`;
