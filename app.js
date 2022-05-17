@@ -156,10 +156,12 @@ const start = async () => {
 				let guild = false;
 
 				for (let guilds of discordUser.manageableGuilds) {
+
 					if (guilds.id == request.params.id) {
 						guild = guilds;
 						break;
 					}
+
 				}
 
 				if (!guild) {
