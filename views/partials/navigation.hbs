@@ -1,4 +1,4 @@
-<nav class="p-3 row">
+<nav class="row p-3 mb-5">
 	<div class="col-12 col-md-2 col-lg-1 text-center text-md-start">
 		<a href="/"><img src="/img/talon-avatar.png" class="img-fluid rounded-circle"></a>
 	</div>
@@ -10,7 +10,7 @@
 		{{#if user}}
 			<div class="dropdown">
 				<button class="btn btn-talon btn-lg dropdown-toggle fw-bold" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-					<img src="https://cdn.discordapp.com/avatars/{{user.profile.id}}/{{user.profile.avatar}}.png" width="32" class="rounded-circle "/> {{user.profile.username}}<span
+					<img src="https://cdn.discordapp.com/avatars/{{user.profile.id}}/{{user.profile.avatar}}.png" width="32" class="rounded-circle"/> {{user.profile.username}}<span
 						class="text-blurple">#{{user.profile.discriminator}}</span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropdownMenu2">

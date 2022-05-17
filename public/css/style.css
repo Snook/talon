@@ -11644,7 +11644,7 @@ textarea.form-control-lg {
 	}
 }
 
-body {
+body.background {
 	background-image: url("/img/bg.jpg");
 	background-position: center bottom;
 	background-repeat: no-repeat;

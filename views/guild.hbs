@@ -1,1 +1,14 @@
-{{guild.name}}
+<form class="row g-3 pb-3 bg-talon text-black">
+	<div class="col-12 col-md-10 text-center text-md-end"><h2 class="fw-bold">{{guild.name}}</h2></div>
+	<div class="col-12 col-md-2 text-md-end text-center">
+		<img src="https://cdn.discordapp.com/icons/{{guild.id}}/{{guild.icon}}.png" class="rounded-circle "/>
+	</div>
+	<div class="col-md-6">
+		<label for="inputEmail4" class="form-label">Email</label>
+		<input type="email" class="form-control" id="inputEmail4">
+	</div>
+	<div class="col-md-6">
+		<label for="inputPassword4" class="form-label">Password</label>
+		<input type="password" class="form-control" id="inputPassword4">
+	</div>
+</form>
