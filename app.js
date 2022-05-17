@@ -143,7 +143,7 @@ const start = async () => {
 		},
 		{
 			method: 'GET',
-			path: '/server/:id',
+			path: '/guild/{id}',
 			handler: async (request, h) => {
 
 				// discord @me
@@ -153,9 +153,22 @@ const start = async () => {
 					discordUser = await Api.discordUser(request.auth.credentials.user_id);
 				}
 
-				return server.render('server', {
+				let guild = false;
+
+				for (let guilds of discordUser.manageableGuilds) {
+					if (guilds.id == request.params.id) {
+						guild = guilds;
+						break;
+					}
+				}
+
+				if (!guild) {
+					return h.redirect('/');
+				}
+
+				return server.render('guild', {
 					title: 'Talon - Discord Bot',
-					guild: {name: 'jibberish'},
+					guild: guild,
 					user: discordUser
 				});
 			}

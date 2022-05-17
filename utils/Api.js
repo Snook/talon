@@ -130,6 +130,7 @@ const Api = {
 	},
 
 	discordUser: async function (user_id) {
+
 		let discordAuth = await DB.discord_user_auth.findOne({
 			where: {discord_user_id: user_id}
 		});
@@ -148,7 +149,7 @@ const Api = {
 			}
 		});
 
-		let manageableGuilds = [{}];
+		let manageableGuilds = [];
 
 		for (let guild of discordUserGuilds.data) {
 
@@ -161,6 +162,7 @@ const Api = {
 		}
 
 		discordUser = {
+			'auth': discordAuth,
 			'profile': discordUser.data,
 			'guilds': discordUserGuilds.data,
 			'manageableGuilds': manageableGuilds
