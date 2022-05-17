@@ -168,9 +168,14 @@ const start = async () => {
 					return h.redirect('/');
 				}
 
+				let guildChannels = await Api.discord({
+					endpoint: `/guilds/${request.params.id}/channels`
+				});
+
 				return server.render('guild', {
 					title: 'Talon - Discord Bot',
 					guild: guild,
+					channels: guildChannels.data,
 					user: discordUser
 				});
 			}

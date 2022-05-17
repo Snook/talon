@@ -169,8 +169,10 @@ const Api = {
 		};
 
 		return discordUser;
+
 	}
 
 };
+
 
 module.exports = Api;
