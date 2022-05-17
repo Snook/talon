@@ -10,8 +10,8 @@
 		{{#if user}}
 			<div class="dropdown">
 				<button class="btn btn-talon btn-lg dropdown-toggle fw-bold" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-					<img src="https://cdn.discordapp.com/avatars/{{user.id}}/{{user.avatar}}.png" width="32" class="rounded-circle "/> {{user.username}}<span
-						class="text-blurple">#{{user.discriminator}}</span>
+					<img src="https://cdn.discordapp.com/avatars/{{user.profile.id}}/{{user.profile.avatar}}.png" width="32" class="rounded-circle "/> {{user.profile.username}}<span
+						class="text-blurple">#{{user.profile.discriminator}}</span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropdownMenu2">
 					<li><a class="dropdown-item text-talon" href="/subscriptions">Subs</a></li>

@@ -130,11 +130,29 @@ const start = async () => {
 				let discordUser = false;
 
 				if (request.auth.credentials !== null) {
-					discordUser = await Api.discord({
-						endpoint: `/users/${request.auth.credentials.user_id}`
+
+					let discordAuth = await DB.discord_user_auth.findOne({
+						where: {discord_user_id: request.auth.credentials.user_id}
 					});
 
-					discordUser = discordUser.data;
+					discordUser = await Api.discord({
+						endpoint: `/users/@me`,
+						headers: {
+							Authorization: `Bearer ${discordAuth.dataValues.access_token}`
+						}
+					});
+
+					let discordUserGuilds = await Api.discord({
+						endpoint: `/users/@me/guilds`,
+						headers: {
+							Authorization: `Bearer ${discordAuth.dataValues.access_token}`
+						}
+					});
+
+					discordUser = {
+						'profile': discordUser.data,
+						'guilds': discordUserGuilds.data
+					};
 				}
 
 				return server.render('index', {
