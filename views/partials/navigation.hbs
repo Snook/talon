@@ -14,9 +14,9 @@
 						class="text-blurple">#{{user.profile.discriminator}}</span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropdownMenu2">
-					<li><a class="dropdown-item text-talon" href="/subscriptions">Subs</a></li>
-					<li><a class="dropdown-item text-talon" href="/server/276625926148849665">Curpies Nation</a></li>
-					<li><a class="dropdown-item text-talon" href="/server/766801126930382868">Ghryphen's Pride</a></li>
+					{{#each user.manageableGuilds}}
+						<li><a class="dropdown-item text-talon" href="/server/{{this.id}}">{{this.name}}</a></li>
+					{{/each}}
 					<li>
 						<hr class="dropdown-divider">
 					</li>

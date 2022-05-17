@@ -9,6 +9,7 @@ const Path = require('path');
 
 const Api = require('./utils/Api');
 const {DB} = require('./utils/Sequelize');
+const DiscordPerm = require('./utils/DicordPerms');
 
 const start = async () => {
 
@@ -149,9 +150,22 @@ const start = async () => {
 						}
 					});
 
+					let manageableGuilds = [{}];
+
+					for (let guild of discordUserGuilds.data) {
+
+						let perms = DiscordPerm.convertPerms(guild.permissions);
+
+						if (perms['MANAGE_GUILD']) {
+							manageableGuilds.push(guild);
+						}
+
+					}
+
 					discordUser = {
 						'profile': discordUser.data,
-						'guilds': discordUserGuilds.data
+						'guilds': discordUserGuilds.data,
+						'manageableGuilds': manageableGuilds
 					};
 				}
 
