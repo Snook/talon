@@ -23,6 +23,7 @@
   "description": "",
   "dependencies": {
     "@hapi/bell": "^12.3.0",
+    "@hapi/boom": "^10.0.0",
     "@hapi/cookie": "^11.0.2",
     "@hapi/hapi": "^20.2.2",
     "@hapi/inert": "^6.0.5",

@@ -4,6 +4,7 @@
 const config = require('./config/config');
 
 const Hapi = require('@hapi/hapi');
+const Boom = require('@hapi/boom');
 const Path = require('path');
 
 const Api = require('./utils/Api');
@@ -125,7 +126,22 @@ const start = async () => {
 					users.data.data[i].stream = onlineStreamsById[user.id];
 				}
 
-				return server.render('index', {title: 'Talon - Discord Bot', team: team.data.data[0], users: users.data.data, credentials: request.auth.credentials});
+				// discord @me
+				let discordUser = false;
+
+				if (request.auth.credentials !== null) {
+					discordUser = await Api.discord({
+						endpoint: `/users/${request.auth.credentials.user_id}`
+					});
+
+					discordUser = discordUser.data;
+				}
+
+				return server.render('index', {
+					title: 'Talon - Discord Bot', team: team.data.data[0],
+					users: users.data.data,
+					user: discordUser
+				});
 			}
 		},
 		{

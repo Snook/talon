@@ -108,7 +108,8 @@ $theme-colors: (
 $font-family-base: "Open Sans", sans-serif;
 $font-family-sans-serif: "Open Sans", sans-serif;
 
-$body-bg: #3c230a;
+//$body-bg: #3c230a;
+$body-bg: #000;
 $body-color: $white;
 
 $link-color: $talon;
@@ -119,3 +120,11 @@ $dropdown-min-width: 14rem;
 
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+body {
+  background-image: url('/img/bg.jpg');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
