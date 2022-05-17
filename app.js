@@ -9,7 +9,6 @@ const Path = require('path');
 
 const Api = require('./utils/Api');
 const {DB} = require('./utils/Sequelize');
-const DiscordPerm = require('./utils/DicordPerms');
 
 const start = async () => {
 
@@ -131,47 +130,32 @@ const start = async () => {
 				let discordUser = false;
 
 				if (request.auth.credentials !== null) {
-
-					let discordAuth = await DB.discord_user_auth.findOne({
-						where: {discord_user_id: request.auth.credentials.user_id}
-					});
-
-					discordUser = await Api.discord({
-						endpoint: `/users/@me`,
-						headers: {
-							Authorization: `Bearer ${discordAuth.dataValues.access_token}`
-						}
-					});
-
-					let discordUserGuilds = await Api.discord({
-						endpoint: `/users/@me/guilds`,
-						headers: {
-							Authorization: `Bearer ${discordAuth.dataValues.access_token}`
-						}
-					});
-
-					let manageableGuilds = [{}];
-
-					for (let guild of discordUserGuilds.data) {
-
-						let perms = DiscordPerm.convertPerms(guild.permissions);
-
-						if (perms['MANAGE_GUILD']) {
-							manageableGuilds.push(guild);
-						}
-
-					}
-
-					discordUser = {
-						'profile': discordUser.data,
-						'guilds': discordUserGuilds.data,
-						'manageableGuilds': manageableGuilds
-					};
+					discordUser = await Api.discordUser(request.auth.credentials.user_id);
 				}
 
 				return server.render('index', {
-					title: 'Talon - Discord Bot', team: team.data.data[0],
+					title: 'Talon - Discord Bot',
+					team: team.data.data[0],
 					users: users.data.data,
+					user: discordUser
+				});
+			}
+		},
+		{
+			method: 'GET',
+			path: '/server/:id',
+			handler: async (request, h) => {
+
+				// discord @me
+				let discordUser = false;
+
+				if (request.auth.credentials !== null) {
+					discordUser = await Api.discordUser(request.auth.credentials.user_id);
+				}
+
+				return server.render('server', {
+					title: 'Talon - Discord Bot',
+					guild: {name: 'jibberish'},
 					user: discordUser
 				});
 			}

@@ -5,6 +5,7 @@ const config = require('../config/config');
 const Axios = require('axios');
 const Hash = require('object-hash');
 const {DB, Op} = require('./Sequelize');
+const DiscordPerm = require('./DicordPerms');
 
 const Api = {
 
@@ -126,6 +127,46 @@ const Api = {
 			console.log(err);
 
 		});
+	},
+
+	discordUser: async function (user_id) {
+		let discordAuth = await DB.discord_user_auth.findOne({
+			where: {discord_user_id: user_id}
+		});
+
+		let discordUser = await Api.discord({
+			endpoint: `/users/@me`,
+			headers: {
+				Authorization: `Bearer ${discordAuth.dataValues.access_token}`
+			}
+		});
+
+		let discordUserGuilds = await Api.discord({
+			endpoint: `/users/@me/guilds`,
+			headers: {
+				Authorization: `Bearer ${discordAuth.dataValues.access_token}`
+			}
+		});
+
+		let manageableGuilds = [{}];
+
+		for (let guild of discordUserGuilds.data) {
+
+			let perms = DiscordPerm.convertPerms(guild.permissions);
+
+			if (perms['MANAGE_GUILD']) {
+				manageableGuilds.push(guild);
+			}
+
+		}
+
+		discordUser = {
+			'profile': discordUser.data,
+			'guilds': discordUserGuilds.data,
+			'manageableGuilds': manageableGuilds
+		};
+
+		return discordUser;
 	}
 
 };
