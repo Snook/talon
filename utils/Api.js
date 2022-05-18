@@ -122,9 +122,13 @@ const Api = {
 
 		axiosParams.url = `https://discordapp.com/api${axiosParams.endpoint}`;
 
-		return Axios(axiosParams).catch(function (err) {
+		return Axios(axiosParams).then(function (response) {
 
-			console.log(err);
+			return response.data;
+
+		}).catch(function (err) {
+
+			return err.response.data;
 
 		});
 	},
@@ -150,22 +154,25 @@ const Api = {
 		});
 
 		let manageableGuilds = [];
+		let manageableGuildsIds = [];
 
-		for (let guild of discordUserGuilds.data) {
+		for (let guild of discordUserGuilds) {
 
 			let perms = DiscordPerm.convertPerms(guild.permissions);
 
 			if (perms['MANAGE_GUILD']) {
 				manageableGuilds.push(guild);
+				manageableGuildsIds.push(guild.id);
 			}
 
 		}
 
 		discordUser = {
 			'auth': discordAuth,
-			'profile': discordUser.data,
-			'guilds': discordUserGuilds.data,
-			'manageableGuilds': manageableGuilds
+			'profile': discordUser,
+			'guilds': discordUserGuilds,
+			'manageableGuilds': manageableGuilds,
+			'manageableGuildsIds': manageableGuildsIds
 		};
 
 		return discordUser;

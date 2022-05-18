@@ -1,0 +1,41 @@
+<form class="row g-3 pb-3 bg-talon text-black">
+	<div class="col-12 col-md-10 text-center text-md-end align-self-center"><h2 class="fw-bold">{{guild.name}}</h2></div>
+	<div class="col-12 col-md-2 text-md-end text-center">
+		<img src="https://cdn.discordapp.com/icons/{{guild.id}}/{{guild.icon}}.png" class="rounded-circle "/>
+	</div>
+	<div class="col-md-5">
+		<label for="streamer" class="form-label">Streamer name</label>
+		<input type="text" class="form-control" id="streamer">
+	</div>
+	<div class="col-8 col-md-5">
+		<label for="streamer_announce" class="form-label">Streamer online announcement</label>
+		<select id="streamer_announce" class="form-select">
+			<option value="false">🔕 No announcement</option>
+			{{#each channels}}
+				<option value="{{this.id}}">#{{this.name}}</option>
+			{{/each}}
+		</select>
+	</div>
+	<div class="col-4 col-md-2">
+		<label for="streamer_color" class="form-label">Online color</label>
+		<input type="color" class="form-control form-control-color" id="streamer_color" value="#FFCF40" title="Online color">
+	</div>
+
+	<div class="col-md-5">
+		<label for="stream_team" class="form-label">Stream Team</label>
+		<input id="stream_team" type="text" class="form-control" value="daddysmisfits">
+	</div>
+	<div class="col-8 col-md-5">
+		<label for="stream_team_announce" class="form-label">Team online announcement</label>
+		<select id="stream_team_announce" class="form-select">
+			<option value="false">🔕 No announcement</option>
+			{{#each channels}}
+				<option value="{{this.id}}">#{{this.name}}</option>
+			{{/each}}
+		</select>
+	</div>
+	<div class="col-4 col-md-2">
+		<label for="team_stream_color" class="form-label">Online color</label>
+		<input type="color" class="form-control form-control-color" id="team_stream_color" value="#FFCF40" title="Online color">
+	</div>
+</form>
