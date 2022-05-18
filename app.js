@@ -38,6 +38,33 @@ const start = async () => {
 		isSecure: config.isSecure
 	});
 
+	server.auth.strategy("twitch", "bell", {
+		// twitch implementation is broken in @hapi/bell, Client-ID header must be included in each request
+		provider: {
+			name: "twitch",
+			protocol: "oauth2",
+			useParamsAuth: true,
+			auth: "https://id.twitch.tv/oauth2/authorize",
+			token: "https://id.twitch.tv/oauth2/token",
+			headers: {
+				"Client-ID": config.twitch.client_id,
+			},
+			scope: ["user:read:email"],
+			scopeSeparator: " ",
+			profile: async function (credentials, params, get) {
+				const profileResponse = await get(
+					"https://api.twitch.tv/helix/users",
+					{}
+				);
+				credentials.profile = profileResponse.data[0];
+			},
+		},
+		password: config.cookie_secret,
+		clientId: config.twitch.client_id,
+		clientSecret: config.twitch.app_secret,
+		isSecure: config.isSecure
+	});
+
 	server.auth.strategy('session', 'cookie', {
 		cookie: {
 			name: 'sid',
@@ -203,6 +230,40 @@ const start = async () => {
 
 					request.cookieAuth.set({
 						user_id: user[0].dataValues.id
+					});
+
+					return h.redirect('/');
+				}
+			}
+		},
+		{
+			method: ['GET', 'POST'],
+			path: '/oauth/twitch',
+			options: {
+				auth: {
+					mode: 'try',
+					strategy: 'twitch'
+				},
+				handler: async (request, h) => {
+
+					if (!request.auth.isAuthenticated) {
+						return h.redirect('/');
+						//return `Authentication failed due to: ${request.auth.error.message}`;
+					}
+
+					let user = await DB.user.upsert({
+						id: request.state.sid.user_id,
+						discord_user_id: request.state.sid.user_id,
+						twitch_user_id: request.auth.credentials.profile.id
+					});
+
+					let twitch_user_auth = await DB.twitch_user_auth.upsert({
+						twitch_user_id: request.auth.credentials.profile.id,
+						access_token: request.auth.artifacts.access_token,
+						expires_in: request.auth.artifacts.expires_in,
+						refresh_token: request.auth.artifacts.refresh_token,
+						scope: request.auth.artifacts.scope[0],
+						token_type: request.auth.artifacts.token_type
 					});
 
 					return h.redirect('/');

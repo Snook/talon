@@ -156,15 +156,17 @@ const Api = {
 		let manageableGuilds = [];
 		let manageableGuildsIds = [];
 
-		for (let guild of discordUserGuilds) {
+		if (discordUserGuilds) {
+			for (let guild of discordUserGuilds) {
 
-			let perms = DiscordPerm.convertPerms(guild.permissions);
+				let perms = DiscordPerm.convertPerms(guild.permissions);
 
-			if (perms['MANAGE_GUILD']) {
-				manageableGuilds.push(guild);
-				manageableGuildsIds.push(guild.id);
+				if (perms['MANAGE_GUILD']) {
+					manageableGuilds.push(guild);
+					manageableGuildsIds.push(guild.id);
+				}
+
 			}
-
 		}
 
 		discordUser = {

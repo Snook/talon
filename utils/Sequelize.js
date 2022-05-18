@@ -66,11 +66,46 @@ const DB = {
 			allowNull: false,
 			unique: true,
 			primaryKey: true
+		},
+		twitch_user_id: {
+			type: DataTypes.INTEGER,
+			allowNull: true,
+			unique: true
 		}
 	}),
 
 	discord_user_auth: sequelize.define('discord_user_auth', {
 		discord_user_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			unique: true,
+			primaryKey: true,
+			autoIncrement: false
+		},
+		access_token: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		expires_in: {
+			type: DataTypes.INTEGER,
+			allowNull: false
+		},
+		refresh_token: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		scope: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		token_type: {
+			type: DataTypes.STRING,
+			allowNull: false
+		}
+	}),
+
+	twitch_user_auth: sequelize.define('twitch_user_auth', {
+		twitch_user_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			unique: true,
