@@ -170,8 +170,12 @@ const start = async () => {
 		},
 		{
 			method: 'GET',
-			path: '/guild/{id}',
+			path: '/guild/{id?}',
 			handler: async (request, h) => {
+
+				if (request.params.id === '') {
+					return h.redirect('/');
+				}
 
 				// discord @me
 				let discordUser = false;
@@ -197,6 +201,15 @@ const start = async () => {
 					channels: ((guildChannels.code === 50001) ? false : guildChannels),
 					user: discordUser
 				});
+			}
+		},
+		{
+			method: 'GET',
+			path: '/oauth',
+			options: {
+				handler: (request, h) => {
+					return h.redirect('/');
+				}
 			}
 		},
 		{
@@ -267,6 +280,15 @@ const start = async () => {
 					});
 
 					return h.redirect('/');
+				}
+			}
+		},
+		{
+			method: 'GET',
+			path: '/login',
+			options: {
+				handler: (request, h) => {
+					return h.redirect('/oauth/discord');
 				}
 			}
 		},
