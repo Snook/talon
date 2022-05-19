@@ -1,7 +1,16 @@
 {
-  "name": "talon_hapi",
+  "name": "talon",
   "version": "1.0.0",
+  "private": true,
   "main": "index.js",
+  "homepage": "https://github.com/Ghryphen/talon",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ghryphen/talon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ghryphen/talon/issues"
+  },
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,10 +26,20 @@
     "watch": "npm-run-all --parallel watch-*",
     "watch-css-main": "nodemon --watch assets/scss --ext scss --exec \"npm-run-all css\""
   },
-  "keywords": [],
   "author": "Ryan <ghryphen@gmail.com>",
   "license": "ISC",
   "description": "",
+  "keywords": [
+    "bootstrap",
+    "sass",
+    "css",
+    "javascript",
+    "hapi",
+    "sqlite3",
+    "handlebars",
+    "discord",
+    "twitch"
+  ],
   "dependencies": {
     "@hapi/bell": "^12.3.0",
     "@hapi/boom": "^10.0.0",
