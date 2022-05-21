@@ -11,6 +11,7 @@
 		<label for="streamer_announce" class="form-label">Streamer online announcement</label>
 		<select id="streamer_announce" class="form-select">
 			<option value="false">🔕 No announcement</option>
+			<option disabled>-------------------</option>
 			{{#each channels}}
 				<option value="{{this.id}}">#{{this.name}}</option>
 			{{/each}}
@@ -29,6 +30,7 @@
 		<label for="stream_team_announce" class="form-label">Team online announcement</label>
 		<select id="stream_team_announce" class="form-select">
 			<option value="false">🔕 No announcement</option>
+			<option disabled>-------------------</option>
 			{{#each channels}}
 				<option value="{{this.id}}">#{{this.name}}</option>
 			{{/each}}
