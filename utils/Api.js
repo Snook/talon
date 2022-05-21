@@ -180,14 +180,14 @@ const Api = {
 		let user = {
 			'user': userInfo,
 			'discord': {
-				'auth': discordAuth,
+				'auth': discordAuth.get(),
 				'profile': discordUser,
 				'guilds': discordUserGuilds,
 				'manageableGuilds': manageableGuilds,
 				'manageableGuildsIds': manageableGuildsIds
 			},
 			twitch: {
-				auth: twitchAuth
+				auth: twitchAuth.get()
 			}
 		};
 
