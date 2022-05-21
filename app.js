@@ -203,7 +203,7 @@ const start = async () => {
 				});
 
 				let guildSettings = await DB.discord_settings_guild.findOne({
-					where: {id: request.params.id}
+					where: {discord_guild_id: request.params.id}
 				});
 
 				return server.render('guild', {
@@ -317,7 +317,7 @@ const start = async () => {
 		},
 		{
 			method: 'PUT',
-			path: '/api/setting/guild',
+			path: '/api/1.0/setting/guild',
 			options: {
 				handler: async (request, h) => {
 
