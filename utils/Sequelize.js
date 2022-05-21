@@ -170,7 +170,6 @@ const DB = {
 
 };
 
-
 sequelize.sync({alter: true});
 
 module.exports = {DB, Op};

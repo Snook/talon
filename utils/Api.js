@@ -173,6 +173,10 @@ const Api = {
 			}
 		}
 
+		let twitchAuth = await DB.twitch_user_auth.findOne({
+			where: {twitch_user_id: userInfo.getDataValue('twitch_user_id')}
+		});
+
 		let user = {
 			'user': userInfo,
 			'discord': {
@@ -181,6 +185,9 @@ const Api = {
 				'guilds': discordUserGuilds,
 				'manageableGuilds': manageableGuilds,
 				'manageableGuildsIds': manageableGuildsIds
+			},
+			twitch: {
+				auth: twitchAuth
 			}
 		};
 
@@ -188,6 +195,5 @@ const Api = {
 	}
 
 };
-
 
 module.exports = Api;
