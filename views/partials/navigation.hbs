@@ -10,11 +10,11 @@
 		{{#if user}}
 			<div class="dropdown">
 				<button class="btn btn-talon btn-lg dropdown-toggle fw-bold" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-					<img src="https://cdn.discordapp.com/avatars/{{user.profile.id}}/{{user.profile.avatar}}.png" width="32" class="rounded-circle"/> {{user.profile.username}}<span
-						class="text-blurple">#{{user.profile.discriminator}}</span>
+					<img src="https://cdn.discordapp.com/avatars/{{user.discord.profile.id}}/{{user.discord.profile.avatar}}.png" width="32" class="rounded-circle"/> {{user.discord.profile.username}}<span
+						class="text-blurple">#{{user.discord.profile.discriminator}}</span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropdownMenu2">
-					{{#each user.manageableGuilds}}
+					{{#each user.discord.manageableGuilds}}
 						<li><a class="dropdown-item text-talon" href="/guild/{{this.id}}">{{this.name}}</a></li>
 					{{/each}}
 					<li>
