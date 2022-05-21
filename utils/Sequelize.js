@@ -57,7 +57,7 @@ const DB = {
 	}),
 
 	discord_settings_guild: sequelize.define('discord_settings_guild', {
-		id: {
+		discord_guild_id: {
 			type: DataTypes.STRING,
 			isNumeric: true,
 			allowNull: false,
@@ -65,15 +65,15 @@ const DB = {
 			primaryKey: true,
 			autoIncrement: false
 		},
-		streamer_name: {
+		streamer: {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		streamer_announcement_channel: {
+		streamer_announce: {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		streamer_announcement_color: {
+		streamer_color: {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
@@ -81,11 +81,11 @@ const DB = {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		stream_team_announcement_channel: {
+		stream_team_announce: {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		stream_team_announcement_color: {
+		team_stream_color: {
 			type: DataTypes.STRING,
 			allowNull: true
 		},

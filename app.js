@@ -314,6 +314,43 @@ const start = async () => {
 					return h.redirect('/');
 				}
 			}
+		},
+		{
+			method: 'PUT',
+			path: '/api/setting/guild',
+			options: {
+				handler: async (request, h) => {
+
+					const schema = Joi.object({
+						discord_guild_id: Joi.number().unsafe(),
+						streamer: Joi.string(),
+						streamer_announce: Joi.number().unsafe(),
+						streamer_color: Joi.string(),
+						stream_team: Joi.string(),
+						stream_team_announce: Joi.number().unsafe(),
+						team_stream_color: Joi.string()
+					});
+
+					const guildSettings = {
+						discord_guild_id: request.params.discord_guild_id,
+						streamer: request.params.streamer,
+						streamer_announce: request.params.streamer_announce,
+						streamer_color: request.params.streamer_color,
+						stream_team: request.params.stream_team,
+						stream_team_announce: request.params.stream_team_announce,
+						team_stream_color: request.params.team_stream_color
+					};
+
+					try {
+						await schema.validateAsync(guildSettings);
+					} catch (err) {
+
+					}
+
+					let discord_settings_guild = await DB.discord_settings_guild.upsert(guildSettings);
+
+				}
+			}
 		}
 	]);
 
