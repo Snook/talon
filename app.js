@@ -5,6 +5,7 @@ const config = require('./config/config');
 
 const Hapi = require('@hapi/hapi');
 const Boom = require('@hapi/boom');
+const Joi = require('joi');
 const Path = require('path');
 
 const Api = require('./utils/Api');
@@ -173,7 +174,13 @@ const start = async () => {
 			path: '/guild/{id?}',
 			handler: async (request, h) => {
 
-				if (request.params.id === '') {
+				const schema = Joi.object({
+					guild_id: Joi.number().unsafe()
+				});
+
+				try {
+					await schema.validateAsync({guild_id: request.params.id});
+				} catch (err) {
 					return h.redirect('/');
 				}
 
@@ -195,9 +202,14 @@ const start = async () => {
 					endpoint: `/guilds/${request.params.id}/channels`
 				});
 
+				let guildSettings = await DB.discord_settings_guild.findOne({
+					where: {id: request.params.id}
+				});
+
 				return server.render('guild', {
 					title: 'Talon - Discord Bot',
 					guild: manageGuild,
+					guild_settings: guildSettings,
 					channels: ((guildChannels.code === 50001) ? false : guildChannels),
 					user: user
 				});
@@ -242,7 +254,7 @@ const start = async () => {
 					});
 
 					request.cookieAuth.set({
-						user_id: user[0].dataValues.id
+						user_id: user[0].getDataValue('id')
 					});
 
 					return h.redirect('/');

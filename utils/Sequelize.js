@@ -17,6 +17,20 @@ const sequelize = new Sequelize({
 
 const DB = {
 
+	app_cache_helix: sequelize.define('app_cache_helix', {
+		hash: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			unique: true,
+			primaryKey: true,
+			autoIncrement: false
+		},
+		response: {
+			type: DataTypes.JSON,
+			allowNull: false
+		}
+	}),
+
 	app_twitch_auth: sequelize.define('app_twitch_auth', {
 		client_id: {
 			type: DataTypes.STRING,
@@ -42,36 +56,38 @@ const DB = {
 		}
 	}),
 
-	app_cache_helix: sequelize.define('app_cache_helix', {
-		hash: {
+	discord_settings_guild: sequelize.define('discord_settings_guild', {
+		id: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
 			primaryKey: true,
 			autoIncrement: false
 		},
-		response: {
-			type: DataTypes.JSON,
-			allowNull: false
-		}
-	}),
-
-	user: sequelize.define('user', {
-		id: {
+		streamer_name: {
 			type: DataTypes.STRING,
-			allowNull: false,
-			primaryKey: true
+			allowNull: true
 		},
-		discord_user_id: {
+		streamer_announcement_channel: {
 			type: DataTypes.STRING,
-			allowNull: false,
-			unique: true
+			allowNull: true
 		},
-		twitch_user_id: {
+		streamer_announcement_color: {
 			type: DataTypes.STRING,
-			allowNull: true,
-			unique: true
-		}
+			allowNull: true
+		},
+		stream_team: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		stream_team_announcement_channel: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		stream_team_announcement_color: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
 	}),
 
 	discord_user_auth: sequelize.define('discord_user_auth', {
@@ -101,6 +117,24 @@ const DB = {
 		token_type: {
 			type: DataTypes.STRING,
 			allowNull: false
+		}
+	}),
+
+	user: sequelize.define('user', {
+		id: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			primaryKey: true
+		},
+		discord_user_id: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			unique: true
+		},
+		twitch_user_id: {
+			type: DataTypes.STRING,
+			allowNull: true,
+			unique: true
 		}
 	}),
 
