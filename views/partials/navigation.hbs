@@ -16,7 +16,7 @@
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropdownMenu2">
 					{{#if user.discord.manageableGuilds}}
 						{{#each user.discord.manageableGuilds}}
-							<li class="dropdown-item text-talon"><a href="/guild/{{this.id}}">{{this.name}}</a></li>
+							<li><a class="dropdown-item text-talon" href="/guild/{{this.id}}">{{this.name}}</a></li>
 						{{/each}}
 					{{else}}
 						<li class="dropdown-item-text">⚠️ No eligible servers</li>
