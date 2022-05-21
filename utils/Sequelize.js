@@ -59,6 +59,7 @@ const DB = {
 	discord_settings_guild: sequelize.define('discord_settings_guild', {
 		id: {
 			type: DataTypes.STRING,
+			isNumeric: true,
 			allowNull: false,
 			unique: true,
 			primaryKey: true,
@@ -93,6 +94,7 @@ const DB = {
 	discord_user_auth: sequelize.define('discord_user_auth', {
 		discord_user_id: {
 			type: DataTypes.STRING,
+			isNumeric: true,
 			allowNull: false,
 			unique: true,
 			primaryKey: true,
@@ -123,16 +125,19 @@ const DB = {
 	user: sequelize.define('user', {
 		id: {
 			type: DataTypes.STRING,
+			isNumeric: true,
 			allowNull: false,
 			primaryKey: true
 		},
 		discord_user_id: {
 			type: DataTypes.STRING,
+			isNumeric: true,
 			allowNull: false,
 			unique: true
 		},
 		twitch_user_id: {
 			type: DataTypes.STRING,
+			isNumeric: true,
 			allowNull: true,
 			unique: true
 		}
@@ -141,6 +146,7 @@ const DB = {
 	twitch_user_auth: sequelize.define('twitch_user_auth', {
 		twitch_user_id: {
 			type: DataTypes.STRING,
+			isNumeric: true,
 			allowNull: false,
 			unique: true,
 			primaryKey: true,
@@ -170,6 +176,8 @@ const DB = {
 
 };
 
-sequelize.sync({alter: true});
+(async () => {
+	await sequelize.sync({alter: true});
+})();
 
 module.exports = {DB, Op};

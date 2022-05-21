@@ -187,7 +187,7 @@ const Api = {
 				'manageableGuildsIds': manageableGuildsIds
 			},
 			twitch: {
-				auth: twitchAuth.get()
+				auth: (!twitchAuth) ? false : twitchAuth.get()
 			}
 		};
 
