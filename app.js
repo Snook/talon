@@ -178,13 +178,13 @@ const start = async () => {
 				}
 
 				// discord @me
-				let discordUser = false;
+				let user = false;
 
 				if (request.auth.credentials !== null) {
-					discordUser = await Api.discordUser(request.auth.credentials.user_id);
+					user = await Api.getUser(request.auth.credentials.user_id);
 				}
 
-				let manageGuild = (discordUser.manageableGuildsIds.includes(request.params.id)) ? discordUser.manageableGuilds.find((e) => e.id == request.params.id) : false;
+				let manageGuild = (user.discord.manageableGuildsIds.includes(request.params.id)) ? user.discord.manageableGuilds.find((e) => e.id == request.params.id) : false;
 
 				// user has no permission to manage guild, kick them out
 				if (!manageGuild) {
@@ -199,7 +199,7 @@ const start = async () => {
 					title: 'Talon - Discord Bot',
 					guild: manageGuild,
 					channels: ((guildChannels.code === 50001) ? false : guildChannels),
-					user: discordUser
+					user: user
 				});
 			}
 		},
