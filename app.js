@@ -157,7 +157,7 @@ const start = async () => {
 				let discordUser = false;
 
 				if (request.auth.credentials !== null) {
-					discordUser = await Api.discordUser(request.auth.credentials.user_id);
+					discordUser = await Api.getUser(request.auth.credentials.user_id);
 				}
 
 				return server.render('index', {

@@ -5,6 +5,7 @@ const Path = require('path');
 const {Sequelize, DataTypes, Op} = require('sequelize');
 
 const sequelize = new Sequelize({
+	host: 'localhost',
 	dialect: 'sqlite',
 	storage: Path.join(__dirname, '../database/main.sqlite'),
 	define: {
@@ -57,18 +58,17 @@ const DB = {
 
 	user: sequelize.define('user', {
 		id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: false,
 			primaryKey: true
 		},
 		discord_user_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: false,
-			unique: true,
-			primaryKey: true
+			unique: true
 		},
 		twitch_user_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: true,
 			unique: true
 		}
@@ -76,7 +76,7 @@ const DB = {
 
 	discord_user_auth: sequelize.define('discord_user_auth', {
 		discord_user_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
 			primaryKey: true,
@@ -106,7 +106,7 @@ const DB = {
 
 	twitch_user_auth: sequelize.define('twitch_user_auth', {
 		twitch_user_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
 			primaryKey: true,

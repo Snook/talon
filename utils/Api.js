@@ -132,24 +132,27 @@ const Api = {
 
 		});
 	},
+	getUser: async (user_id) => {
 
-	discordUser: async function (user_id) {
+		const userInfo = await DB.user.findOne({
+			where: {id: user_id}
+		});
 
 		let discordAuth = await DB.discord_user_auth.findOne({
-			where: {discord_user_id: user_id}
+			where: {discord_user_id: userInfo.getDataValue('discord_user_id')}
 		});
 
 		let discordUser = await Api.discord({
 			endpoint: `/users/@me`,
 			headers: {
-				Authorization: `Bearer ${discordAuth.dataValues.access_token}`
+				Authorization: `Bearer ${discordAuth.getDataValue('access_token')}`
 			}
 		});
 
 		let discordUserGuilds = await Api.discord({
 			endpoint: `/users/@me/guilds`,
 			headers: {
-				Authorization: `Bearer ${discordAuth.dataValues.access_token}`
+				Authorization: `Bearer ${discordAuth.getDataValue('access_token')}`
 			}
 		});
 
@@ -157,6 +160,7 @@ const Api = {
 		let manageableGuildsIds = [];
 
 		if (discordUserGuilds) {
+
 			for (let guild of discordUserGuilds) {
 
 				let perms = DiscordPerm.convertPerms(guild.permissions);
@@ -169,16 +173,18 @@ const Api = {
 			}
 		}
 
-		discordUser = {
-			'auth': discordAuth,
-			'profile': discordUser,
-			'guilds': discordUserGuilds,
-			'manageableGuilds': manageableGuilds,
-			'manageableGuildsIds': manageableGuildsIds
+		let user = {
+			'user': userInfo,
+			'discord': {
+				'auth': discordAuth,
+				'profile': discordUser,
+				'guilds': discordUserGuilds,
+				'manageableGuilds': manageableGuilds,
+				'manageableGuildsIds': manageableGuildsIds
+			}
 		};
 
-		return discordUser;
-
+		return user;
 	}
 
 };
