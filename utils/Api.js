@@ -132,7 +132,7 @@ const Api = {
 
 		});
 	},
-	getUser: async (user_id) => {
+	getUser: async function (user_id) {
 
 		const userInfo = await DB.user.findOne({
 			where: {id: user_id}
