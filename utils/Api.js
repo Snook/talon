@@ -134,7 +134,7 @@ const Api = {
 	},
 	getUser: async function (user_id) {
 
-		const userInfo = await DB.user.findOne({
+		let userInfo = await DB.user.findOne({
 			where: {id: user_id}
 		});
 
@@ -180,14 +180,14 @@ const Api = {
 		let user = {
 			'user': userInfo,
 			'discord': {
-				'auth': discordAuth.get(),
+				'auth': discordAuth?.get(),
 				'profile': discordUser,
 				'guilds': discordUserGuilds,
 				'manageableGuilds': manageableGuilds,
 				'manageableGuildsIds': manageableGuildsIds
 			},
 			twitch: {
-				auth: (!twitchAuth) ? false : twitchAuth.get()
+				auth: twitchAuth?.get()
 			}
 		};
 

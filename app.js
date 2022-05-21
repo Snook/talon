@@ -209,7 +209,7 @@ const start = async () => {
 				return server.render('guild', {
 					title: 'Talon - Discord Bot',
 					guild: manageGuild,
-					guild_settings: (!guildSettings) ? false : guildSettings.get(),
+					guild_settings: guildSettings?.get(),
 					channels: ((guildChannels.code === 50001) ? false : guildChannels),
 					user: user
 				});
